@@ -1,33 +1,122 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+  .animate-slideLoop {
+    animation: slideLoop 8s ease-in-out infinite;
+  }
+    
+  .animate-cartOpen {
+    animation: cartOpen .5s ease-in;
+  }
+    .animate-cartClose {
+    animation: cartOpen .5s ease-out;
+  }
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  @keyframes slideLoop {
+  0%  {
+    transform: translateX(100%);
+  }
+  5% {
+    transform: translateX(0%);
+  }
+  95%{
+    transform: translateX(0%);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  }
+  100%{
+    transform: translateX(-100%);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @keyframes cartOpen {
+  0%  {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }  
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes cartClose {
+    0%  {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }  
+}
+
+  .brightness-50 {
+    filter: brightness(50%);
+  }
+  .outline-text {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    color: white;
+    /* This will be the inner color of the text */
+  }
+  .gradient {
+  background: linear-gradient(to right, #7bcfee, #f6747d);
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(to right, #7bcfee, #f6747d);
+  /* For Firefox 3.6 to 15 */
+  background: -moz-linear-gradient(to right, #7bcfee, #f6747d);
+  /* For IE 6 and 7 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bcfee', endColorstr='#f6747d',GradientType=1);
+  /* For IE 8 and above */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bcfee', endColorstr='#f6747d',GradientType=1)";
+}
+
+.h-screen-100px {
+    height: calc(100vh-100px );
+  }
+
+
+
+slider-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .card {
+      flex: 0 0 auto;
+      width: 40%; /* Adjust card width */
+      margin-right: 1rem; /* Adjust card margin */
+    }
+    /* .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      padding: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+    } */
+    .prev {
+      left: 0.5rem;
+    }
+    .next {
+      right: 0.5rem;
+    }
+
+    @font-face {
+  font-family: 'NoirProBold';
+  src: url('../lib/fonts/NoirPro-Bold/NoirPro-Bold.ttf') format('truetype'); /* Replace '/path/to/font.ttf' with the actual path to your font file */
+}
+    @font-face {
+  font-family: 'NoirProRegular';
+  src: url('../lib/fonts/NoirPro-Regular/NoirPro-Regular.ttf') format('truetype'); /* Replace '/path/to/font.ttf' with the actual path to your font file */
+}
+
+
+}
+
+@layer components {
+  .hover-outline{
+@apply  outline outline-2 outline-offset-2 rounded-xl
   }
 }

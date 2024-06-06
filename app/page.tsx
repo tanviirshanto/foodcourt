@@ -1,11 +1,7 @@
 
-import { authOptions } from "../app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
-import Navbar from "@/components/Navbar/navbar"
 import dynamic from "next/dynamic";
 import Shop from "@/models/shopModel";
 import Recommended from "@/models/recommendedModel";
-import Restaurants from "@/components/Home/restaurants";
 import Hero from "@/components/Home/hero";
 import Reviews from "@/components/Home/reviews";
 import Recom from "@/components/Home/recom";
@@ -20,8 +16,15 @@ async function GetAllRecom() {
   return items;
 }
 
-const DynamicMapComponent = dynamic(
+const DynamicRestaurantsComponent = dynamic(
   () => import("@/components/Home/restaurants"),
+  {
+    ssr: false,
+  }
+);
+
+const DynamicNavbarComponent = dynamic(
+  () => import("@/components/Navbar/navbar"),
   {
     ssr: false,
   }
@@ -35,9 +38,9 @@ async function Home() {
   
   return (
     <div>
-      <Navbar isHomePage="true" />
+      <DynamicNavbarComponent isHomePage="true" />
       <Hero />
-      <DynamicMapComponent shops={JSON.stringify(s)} />
+      <DynamicRestaurantsComponent shops={JSON.stringify(s)} />
       <Recom items={JSON.stringify(i)} />
       <Reviews />
     </div>

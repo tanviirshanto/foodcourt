@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 @layer utilities {
-  .animate-slideLoop {
-    animation: slideLoop 8s ease-in-out infinite;
+.animate-slideLoop {
+    animation: slideLoop 4s ease-in-out infinite;
   }
-    
+  
+  @keyframes slideLoop {
+    0% {
+      transform: translateX(100%);
+    }
+    5% {
+      transform: translateX(0%);
+    }
+    95% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
   .animate-cartOpen {
     animation: cartOpen .5s ease-in;
   }
@@ -13,21 +27,6 @@
     animation: cartOpen .5s ease-out;
   }
 
-  @keyframes slideLoop {
-  0%  {
-    transform: translateX(100%);
-  }
-  5% {
-    transform: translateX(0%);
-  }
-  95%{
-    transform: translateX(0%);
-
-  }
-  100%{
-    transform: translateX(-100%);
-  }
-}
 
   @keyframes cartOpen {
   0%  {
@@ -68,6 +67,30 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bcfee', endColorstr='#f6747d',GradientType=1)";
 }
 
+  .gradient2 {
+  background: linear-gradient(to right, #ce91a1, #f3767f);
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(to right, #ce91a1, #f3767f);
+  /* For Firefox 3.6 to 15 */
+  background: -moz-linear-gradient(to right, #ce91a1, #f3767f);
+  /* For IE 6 and 7 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce91a1', endColorstr='#f3767f',GradientType=1);
+  /* For IE 8 and above */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce91a1', endColorstr='#f3767f',GradientType=1)";
+}
+
+  .gradient3 {
+  background: linear-gradient(to right, #7bcfee, #c39aad);
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(to right, #7bcfee, #c39aad);
+  /* For Firefox 3.6 to 15 */
+  background: -moz-linear-gradient(to right, #7bcfee, #c39aad);
+  /* For IE 6 and 7 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bcfee', endColorstr='#c39aad',GradientType=1);
+  /* For IE 8 and above */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#7bcfee', endColorstr='#c39aad',GradientType=1)";
+}
+
 .h-screen-100px {
     height: calc(100vh-100px );
   }
@@ -101,6 +124,9 @@ slider-container {
     }
     .next {
       right: 0.5rem;
+    }
+    .c{
+      z-index: 0;
     }
 
     @font-face {

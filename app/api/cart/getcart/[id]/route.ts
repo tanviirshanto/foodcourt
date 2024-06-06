@@ -8,7 +8,7 @@ export async function GET(request, { params }) {
 
   try {
     const cart = await Cart.findOne({ user_id: id });
-
+    console.log(cart)
     if (!cart) {
       return NextResponse.json(
         { success: false, message: "Cart not found" },

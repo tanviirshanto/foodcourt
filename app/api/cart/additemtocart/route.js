@@ -71,11 +71,11 @@ export async function POST(request, response) {
     .save()
     .then((userCart) => {
       console.log("Item added to cart", userCart);
-      // Handle successful save
+     
     })
     .catch((error) => {
       console.error("Error adding to cart", error);
-      // Handle error
+      
     });
 
   return NextResponse.json(userCart);

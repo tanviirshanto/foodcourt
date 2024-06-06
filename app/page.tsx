@@ -1,14 +1,45 @@
 
 import { authOptions } from "../app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
+import Navbar from "@/components/Navbar/navbar"
+import dynamic from "next/dynamic";
+import Shop from "@/models/shopModel";
+import Recommended from "@/models/recommendedModel";
+import Restaurants from "@/components/Home/restaurants";
+import Hero from "@/components/Home/hero";
+import Reviews from "@/components/Home/reviews";
+import Recom from "@/components/Home/recom";
 
-export const dynamic = "force-dynamic";
+async function GetAllShops() {
+  const shops = await Shop.find();
+  return shops;
+}
+
+async function GetAllRecom() {
+  const items = await Recommended.find();
+  return items;
+}
+
+const DynamicMapComponent = dynamic(
+  () => import("@/components/Home/restaurants"),
+  {
+    ssr: false,
+  }
+);
+
 
 async function Home() {
-  const session = await getServerSession(authOptions);
+
+  const s=await GetAllShops()
+  const i = await GetAllRecom();
+  
   return (
     <div>
-      <h1>{session ? `Welcome, ${session.user.name}` : "Not signed in"}</h1>
+      <Navbar isHomePage="true" />
+      <Hero />
+      <DynamicMapComponent shops={JSON.stringify(s)} />
+      <Recom items={JSON.stringify(i)} />
+      <Reviews />
     </div>
   );
 }

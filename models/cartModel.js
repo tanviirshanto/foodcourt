@@ -19,7 +19,6 @@ const cartSchema = new mongoose.Schema(
         image: String,
         quantity: Number,
         price: Number,
-        image: String,
       },
     ],
     total_amount: {

@@ -14,9 +14,10 @@ const orderSchema = new mongoose.Schema({
     {
       order_date: {
         type: Date,
+        // default: Date.now,
       },
       name: {
-        type:String
+        type: String,
       },
       address: {
         type: String,
@@ -42,9 +43,9 @@ const orderSchema = new mongoose.Schema({
 
       shipping: {
         type: String,
-        enum: ["pending", "delivered",  "cancelled"], // Example status options
+        enum: ["pending", "delivered", "cancelled"], // Example status options
       },
-      shipping_charge:Number,
+      shipping_charge: Number,
       payment: {
         type: String,
         enum: ["pending", "paid", "cash on delivery"], // Example status options
@@ -56,8 +57,6 @@ const orderSchema = new mongoose.Schema({
       total_time: {
         type: Number,
       },
-
-
     },
   ],
 });

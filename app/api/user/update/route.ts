@@ -1,48 +1,57 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { UploadImage } from "@/lib/upload-image";
-import User from "@/models/shopModel";
+import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
+
 connect();
 
 export const PUT = async (req: NextRequest) => {
-  const formData = await req.formData();
-  console.log(formData)
-  const id = formData.get("id");
+  try {
+    const formData = await req.formData();
+    console.log(formData);
+    const id = formData.get("id");
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const contact = formData.get("contact");
+    const address = formData.get("address");
 
-  const name = formData.get("name");
+    console.log(id);
 
-  const email = formData.get("email");
-  const contact = formData.get("contact");
-  const address = formData.get("address");
+    let user = await User.findOne({
+      _id: id,
+    });
 
-  console.log(id);
+    console.log(user);
 
-  let user = await User.findOne({
-    _id: id,
-  });
+    if (!user) {
+      return NextResponse.json(
+        { msg: "No user found" },
+        {
+          status: 404,
+        }
+      );
+    }
 
-   console.log(user)
-
-  if (!user) {
-    return NextResponse.json(
-      { msg: "No user found" },
+    // Update the user with new values
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
       {
-        status: 404,
+        name,
+        email,
+        contact,
+        address,
+      },
+      { new: true } // This option returns the modified document rather than the original
+    );
+
+    console.log(updatedUser);
+    return NextResponse.json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return NextResponse.json(
+      { msg: "Error updating user", error: error.message },
+      {
+        status: 500,
       }
     );
   }
-
-  // Update the item with new values
-  user = {
-    _id: id,
-    name,
-    email,
-    contact,
-    address,
-  };
-
-  // Save the updated user document
-  const savedUser = await user.save();
-  console.log(savedUser);
-  return NextResponse.json(savedUser);
 };

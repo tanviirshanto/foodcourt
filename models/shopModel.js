@@ -15,7 +15,6 @@ const itemSchema = new Schema(
   { _id: false }
 ); 
 
-
 const shopSchema = new Schema({
   name: { type: String, required: true },
   image_url: { type: String, required: true },

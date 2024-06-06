@@ -24,8 +24,8 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-redux": "^9.1.2",
-    "stripe": "^15.8.0",
-    "tailwind-typewriter": "^1.0.1"
+    "react-type-animation": "^3.2.0",
+    "stripe": "^15.8.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

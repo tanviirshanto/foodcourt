@@ -33,10 +33,9 @@ export async function GET(request, { params }) {
     }
 
     // Return the found order
-    return NextResponse.json({
-      success: true,
-      data: userOrder.orders[0],
-    });
+    return NextResponse.json(
+      userOrder.orders[0],
+    );
   } catch (error) {
     console.error("Error fetching order", error);
     return NextResponse.json(

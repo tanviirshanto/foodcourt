@@ -5,6 +5,9 @@ import Recommended from "@/models/recommendedModel";
 import Hero from "@/components/Home/hero";
 import Reviews from "@/components/Home/reviews";
 import Recom from "@/components/Home/recom";
+import { connect } from "@/dbConfig/dbConfig";
+
+connect();
 
 async function GetAllShops() {
   const shops = await Shop.find();

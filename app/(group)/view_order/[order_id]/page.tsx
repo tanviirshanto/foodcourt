@@ -39,7 +39,7 @@ function Page({ params }: any) {
 
   return (
     <div className="max-w-screen min-h-screen mb-14 lg:mb-36">
-      <div className="md:w-[40%] pt-24 mx-auto">
+      <div className="md:w-[40%] pt-14 lg:pt-24 mx-5 md:mx-auto">
         <div className="text-2xl text-center mt-14 mb-8">Ordered Items</div>
 
         {order?.items?.map((item) => (

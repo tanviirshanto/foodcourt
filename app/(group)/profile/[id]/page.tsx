@@ -1,7 +1,8 @@
 import User from "@/models/userModel";
 import Order from "@/models/orderModel";
 import Index from "@/components/profile/index";
-
+import { connect } from "@/dbConfig/dbConfig";
+connect();
 async function GetUser(id: string) {
   const p = await User.findOne({ _id: id });
 

@@ -6,7 +6,7 @@ import { GlobalContextProvider } from "@/redux/Provider";
 
 import Footer from "@/components/Footer/footer";
 import { Next13NProgress, Link } from "nextjs13-progress";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -34,6 +34,7 @@ export default function RootLayout({
           <Footer />
           <Next13NProgress color="red" height={5} />
         </GlobalContextProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -27,7 +27,7 @@ function Logged_name({ scrollY, isHomePage }) {
           </Link>
           <div
             className="md:text-sm   px-2 
-               rounded-xl font-semibold  text-nowrap"
+               rounded-xl font-semibold  text-nowrap cursor-pointer"
             onClick={() => signOut()}
           >
             Log Out

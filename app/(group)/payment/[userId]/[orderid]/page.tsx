@@ -62,7 +62,7 @@ async function handlePayment() {
         onClick={handlePayment}
       >
         <Image
-          src="/stripe.svg"
+          src="/stripe.png"
           width={50}
           height={50}
           alt="logo"

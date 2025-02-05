@@ -64,22 +64,22 @@ export const POST = async (request: any) => {
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
-      line_items:[
-    ...stripeItems, // Existing line items
-    {
-      price_data: {
-        currency: 'usd',
-        unit_amount: shipping_charge * 100, // Convert to cents
-        product_data: {
-          name: 'Shipping Charge',
-          // Optionally, you can add description or other product information
+      line_items: [
+        ...stripeItems, // Existing line items
+        {
+          price_data: {
+            currency: "usd",
+            unit_amount: shipping_charge * 100, // Convert to cents
+            product_data: {
+              name: "Shipping Charge",
+              // Optionally, you can add description or other product information
+            },
+          },
+          quantity: 1, // Assuming only one shipping charge
         },
-      },
-      quantity: 1, // Assuming only one shipping charge
-    },
-  ],
+      ],
       mode: "payment",
-      success_url: "/success",
+      success_url: `https://foodcourt-two.vercel.app/view_order/${orderid}`,
       cancel_url: "/cancel",
       metadata: { userId, orderid },
     });

@@ -80,7 +80,7 @@ export const POST = async (request: any) => {
       ],
       mode: "payment",
       success_url: `https://foodcourt-two.vercel.app/view_order/${orderid}`,
-      cancel_url: "/cancel",
+      cancel_url: `https://foodcourt-two.vercel.app/view_order/${orderid}`,
       metadata: { userId, orderid },
     });
 

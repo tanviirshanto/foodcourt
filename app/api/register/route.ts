@@ -1,51 +1,42 @@
-import bcrypt from 'bcryptjs'
-import {connect} from '@/dbConfig/dbConfig'
-import { NextRequest, NextResponse } from 'next/server';
-import User from '@/models/userModel'
-import { sendEmail } from '@/helpers/mailer';
+import bcrypt from "bcryptjs";
+import { connect } from "@/dbConfig/dbConfig";
+import User from "@/models/userModel";
+import { sendEmail } from "@/helpers/mailer";
+import { NextRequest, NextResponse } from "next/server";
 
 
-connect();
-export async function POST(request:NextRequest) {
 
-  const body = await request.json();
-  
-  const { name, email, password } = body;
+export async function POST(req: NextRequest) {
+  try {
+    await connect();
 
-  if(!name || !email || !password) {
-        return new NextResponse('Missing Fields', { status: 400 })
+    const { name, email, password } = await req.json();
+
+    if (!name || !email || !password) {
+      return new NextResponse("Missing fields", { status: 400 });
     }
-    
-    const exist = await User.findOne({
-            email
-    });
 
-    if(exist) {
-        throw new Error('Email already exists')
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return new NextResponse("Email already exists", { status: 409 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const userData = 
-    {
-            name,
-            email,
-            password:hashedPassword
-        }
-  const newUser = new User(userData);
-  
-        newUser.save()
-  .then(async (savedUser) => {
-    console.log('User saved:', savedUser);
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
+    const savedUser = await newUser.save();
     await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
-  })
-  .catch((error) => {
-    console.error('Error saving user:', error);
-    // Handle error
-  });
 
-  
-
-    return NextResponse.json("Finished")
+    return NextResponse.json({ message: "User registered successfully" });
+  } catch (err: any) {
+    console.error("REGISTER ERROR:", err); // 👈 Add this for debugging
+    return new NextResponse("Server error", { status: 500 });
+  }
 }
+

@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import Logged_name from "@/components/logged_name/logged_name";
+import Logged_name from "@/components/Navbar/logged_name";
 import {Link} from "nextjs13-progress";
 import { Next13NProgress } from "nextjs13-progress";
 import Cart from "@/components/cart/cart";
@@ -23,7 +23,7 @@ function Navbar({isHomePage}) {
     const navbarClasses =
       scrollY > 0 && isHomePage
         ? "bg-slate-100 text-[#e60a2b] shadow-xl top-0"
-        : "bg-[#e77f8b] text-white ";
+        : "gradient text-white ";
   
   const secondClass = scrollY > 0 && !isHomePage ? "top-0":"";
   
@@ -35,7 +35,7 @@ function Navbar({isHomePage}) {
     <div>
       <div
         className={`flex justify-end ${
-          isHomePage ? "bg-[#e77f8b] text-white" : "text-black"
+          isHomePage ? "gradient text-white" : "text-black"
         } `}
       >
         <Logged_name scrollY={scrollY} isHomePage={isHomePage} />
@@ -46,7 +46,7 @@ function Navbar({isHomePage}) {
       >
         <h1 className=" font-extrabold font-NoirProBold   ">
           <Link href={"/"} className="text-nowrap text-2xl md:text-3xl">
-            FOOD CLUB
+            FOOD COURT
           </Link>
         </h1>
         <div className="">

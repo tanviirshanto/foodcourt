@@ -1,21 +1,28 @@
-// app/api/order/getorder/[userId]/route.js
-import { NextResponse } from "next/server";
+// app/api/order/getorder/[userId]/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Order from "@/models/orderModel";
 import { connect } from "@/dbConfig/dbConfig";
 
-connect();
+interface Params {
+  params: {
+    userId: string;
+  };
+}
 
-export async function GET(request, { params }) {
+export async function GET(request: NextRequest, { params }: Params) {
   const { userId } = params;
 
   try {
+    await connect();
     console.log(`Fetching all orders for userId: ${userId}`);
 
-    // Find all orders for the given userId
-    const userOrders = await Order.find({ user_id: userId });
+    // Ensure userId is a valid ObjectId
+    const userObjectId = new mongoose.Types.ObjectId(userId);
 
-    // Check if any orders were found
+    // Find all orders for the given userId
+    const userOrders = await Order.find({ user_id: userObjectId });
+
     if (!userOrders || userOrders.length === 0) {
       return NextResponse.json(
         {
@@ -26,7 +33,6 @@ export async function GET(request, { params }) {
       );
     }
 
-    // Return the found orders
     return NextResponse.json({
       success: true,
       data: userOrders,

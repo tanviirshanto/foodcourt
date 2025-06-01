@@ -1,56 +1,50 @@
-import { useSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
-import { getSession } from "next-auth/react";
-import Cart from "@/models/cartModel";
-connect();
+import CartModel from "@/models/cartModel";
+import { CartItem } from "@/types/cart";
 
-export async function PUT(request:NextRequest, response:NextResponse) {
- 
-  const body = await request.json();
-  const { newItem, user_id } = body;
 
-  const { id, name, category, estimated_time, image, quantity, price } =
-    newItem;
-console.log("quantity", quantity);
-  if (!user_id || !id || !quantity) {
-    return NextResponse.json({ error: "Incomplete data" }, { status: 400 });
-  }
 
-  let userCart = await Cart.findOne({ user_id });
+interface RequestBody {
+  newItem: CartItem;
+  user_id: string;
+}
 
-  if (!userCart) {
-    return NextResponse.json("No cart found")
-  }
+export async function PUT(request: NextRequest) {
+  try {
+    await connect();
+    const body: RequestBody = await request.json();
+    const { newItem, user_id } = body;
+    const { id, quantity, price } = newItem;
 
-  if (userCart) {
-    const existingItemIndex = userCart.items.findIndex((item:any) => {
-      console.log(item.id.toString(), id.toString());
-      return item.id.toString() === id.toString();
-    });
-      
-    if (existingItemIndex !== -1 ) {
-      userCart.items[existingItemIndex] = newItem;
-      userCart.items[existingItemIndex].subtotal =
-        parseInt(quantity) * parseInt(price);
-      console.log(userCart.items[existingItemIndex].subtotal);
+    if (!user_id || !id || !quantity) {
+      return NextResponse.json({ error: "Incomplete data" }, { status: 400 });
     }
-    
-    else {
-      return NextResponse.json("Item not found");
+
+    const userCart = await CartModel.findOne({ user_id });
+
+    if (!userCart) {
+      return NextResponse.json({ error: "No cart found" }, { status: 404 });
     }
+
+    const existingItemIndex = userCart.items.findIndex(
+      (item: CartItem) => item.id.toString() === id.toString()
+    );
+
+    if (existingItemIndex === -1) {
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
+    }
+
+    userCart.items[existingItemIndex] = {
+      ...newItem,
+      subtotal: newItem.quantity * newItem.price,
+    };
+
+    await userCart.save();
+
+    return NextResponse.json(userCart, { status: 200 });
+  } catch (error: unknown) {
+    console.error("Error updating cart:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-
-  await userCart
-    .save()
-    .then((userCart:any) => {
-      console.log("Item added to cart", userCart);
-      
-    })
-    .catch((error:any) => {
-      console.error("Error adding to cart", error);
-      
-    });
-
-  return NextResponse.json(userCart);
 }

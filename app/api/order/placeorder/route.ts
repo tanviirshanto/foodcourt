@@ -1,46 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
-
 import Order from "@/models/orderModel";
-connect();
+import { SingleOrder } from "@/types/order";
 
-export async function POST(request: NextRequest, response: NextResponse) {
-  // Connect to MongoDB
-  // try {
 
-  const body = await request.json();
-  //console.log(body);
-  const { user_id, orderData } = body;
 
-  // console.log(user_id);
-  if (!user_id) {
-    return NextResponse.json({ error: "Incomplete data" }, { status: 400 });
+interface RequestBody {
+  user_id: string;
+  orderData: SingleOrder;
+}
+
+export async function POST(request: NextRequest) {
+  try { 
+    await connect();
+    const body: RequestBody = await request.json();
+    const { user_id, orderData } = body;
+
+    if (!user_id || !orderData) {
+      return NextResponse.json({ error: "Incomplete data" }, { status: 400 });
+    }
+
+    let userOrder = await Order.findOne({ user_id });
+
+    if (!userOrder) {
+      userOrder = new Order({ user_id, orders: [] });
+    }
+
+    userOrder.orders.push(orderData);
+    await userOrder.save();
+
+    const createdOrder = userOrder.orders[userOrder.orders.length - 1];
+    return NextResponse.json({ user_id, order: createdOrder }, { status: 201 });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
-
-  // Find the user's cart based on the user ID
-  let userOrder = await Order.findOne({ user_id });
-  //console.log(userOrder);
-
-  if (!userOrder) {
-    // Create a new Order if it doesn't exist for the user
-    userOrder = new Order({ user_id, orders: [] });
-  }
-  //console.log(orderData);
-
-  userOrder.orders.push(orderData);
-
-  await userOrder
-    .save()
-    .then((userOrder: any) => {
-      //console.log("Item added to Order", userOrder);
-      // Handle successful save
-    })
-    .catch((error: any) => {
-      console.error("Error adding to Order", error);
-      // Handle error
-    });
-  const createdOrder = userOrder.orders[userOrder.orders.length - 1];
-  const responseData = { user_id, order: createdOrder };
-
-  return NextResponse.json(responseData);
 }

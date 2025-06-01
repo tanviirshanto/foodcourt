@@ -1,27 +1,22 @@
-// Import necessary modules
+// app/api/user/getuser/[id]/route.ts
 import User from "@/models/userModel";
+import { connect } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
 
-// Define the route handler
-export async function GET(request, { params }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  await connect();
   const { id } = params;
 
   try {
-    // Find the user by ID
-    const user = await User.findById({_id:id});
+    const user = await User.findById(id).select("name email contact address imageUrl");
 
-    // Check if the user exists
     if (!user) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "User not found",
-        },
+        { success: false, message: "User not found" },
         { status: 404 }
       );
     }
 
-    // Return the user data
     return NextResponse.json({
       success: true,
       data: user,
@@ -29,14 +24,8 @@ export async function GET(request, { params }) {
   } catch (error) {
     console.error("Error fetching user", error);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Error fetching user",
-      },
+      { success: false, message: "Error fetching user" },
       { status: 500 }
     );
   }
 }
-
-// Export the route handler
-export default GET;

@@ -1,14 +1,16 @@
 import { connect } from "@/dbConfig/dbConfig";
 import Cart from "@/models/cartModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request, { params }) {
-  const { id } = params;
-  await connect();
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 
   try {
+    await connect();
+    const { id } = params;
+
     const cart = await Cart.findOne({ user_id: id });
-    console.log(cart)
+
     if (!cart) {
       return NextResponse.json(
         { success: false, message: "Cart not found" },
@@ -16,8 +18,12 @@ export async function GET(request, { params }) {
       );
     }
 
-    return NextResponse.json(cart);
+    return NextResponse.json({ success: true, data: cart }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ success: false, error }, { status: 400 });
+    console.error("Error fetching cart:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch cart" },
+      { status: 400 }
+    );
   }
 }

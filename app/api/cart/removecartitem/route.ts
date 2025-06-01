@@ -1,13 +1,14 @@
-// app/api/cart/removecartitem/route.js
 import { NextResponse } from "next/server";
 import Cart from "@/models/cartModel";
 import { connect } from "@/dbConfig/dbConfig";
+import type { CartItem } from "@/types"; 
 
-connect();
 
-export async function PUT(request) {
+
+export async function PUT(request: Request) {
   try {
-    const { item_id, user_id } = await request.json();
+    await connect();
+    const { item_id, user_id }: { item_id: string; user_id: string } = await request.json();
 
     if (!item_id || !user_id) {
       return NextResponse.json({
@@ -25,7 +26,10 @@ export async function PUT(request) {
       });
     }
 
-    const itemIndex = cart.items.findIndex((item) => item.id === item_id);
+    // Ensure the items are treated as CartItem[]
+    const items: CartItem[] = cart.items;
+
+    const itemIndex = items.findIndex((item: CartItem) => item.id === item_id);
 
     if (itemIndex === -1) {
       return NextResponse.json({
@@ -34,18 +38,22 @@ export async function PUT(request) {
       });
     }
 
-    cart.items.splice(itemIndex, 1);
+    items.splice(itemIndex, 1); // Remove item
 
-    // Recalculate the total amount and total time
-    cart.total_amount = cart.items.reduce(
-      (total, item) => total + item.quantity * item.price,
+    // Recalculate totals
+    const total_amount = items.reduce(
+      (sum: number, item: CartItem) => sum + item.quantity * item.price,
       0
     );
 
-    cart.total_time = cart.items.reduce(
-      (total, item) => total + item.quantity * item.estimated_time,
+    const total_time = items.reduce(
+      (sum: number, item: CartItem) => sum + item.quantity * item.estimated_time,
       0
     );
+
+    cart.items = items;
+    cart.total_amount = total_amount;
+    cart.total_time = total_time;
 
     await cart.save();
 

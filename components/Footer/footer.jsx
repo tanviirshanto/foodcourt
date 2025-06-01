@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex lg:pt-24 pt-10 w-[95%]  lg:pl-20 px-5  items-start lg:flex-row flex-row flex-wrap lg:flex-nowrap  gap-5  ">
           <div className="lg:w-[20%]">
             <div className="text-xl font-extrabold px-4 py-2 text-white">
-              FOOD CLUB
+              FOOD COURT
             </div>
             <div className="lg:text-lg text-md font-bold px-4 py-2  text-white    ">
               Contact
@@ -92,7 +92,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-sm text-[#a6aab6] pl-8 lg:pl-24 py-5 ">
-          © 2024 All - rights reserved.
+         © {new Date().getFullYear()} All rights reserved.
         </div>
       </div>
     );

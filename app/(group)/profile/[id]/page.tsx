@@ -1,31 +1,32 @@
-import User from "@/models/userModel";
-import Order from "@/models/orderModel";
-import Index from "@/components/profile/index";
+// app/profile/[id]/page.tsx
 import { connect } from "@/dbConfig/dbConfig";
+import User, { UserDocument } from "@/models/userModel";
+import Order from "@/models/orderModel";
+import ProfileIndex from "@/components/profile";
+
+
 connect();
-async function GetUser(id: string) {
-  const p = await User.findOne({ _id: id });
 
-  return p;
+async function getUser(id: string): Promise<UserDocument | null> {
+  return User.findById(id).lean();
 }
 
-async function GetOrder(userid: string) {
-  const p = await Order.findOne({ user_id: userid });
-  // const sorted_orders = p?.orders
-  //  console.log(p?.orders);
-  return p?.orders.toObject();
+async function getOrders(userId: string) {
+  const data = await Order.findOne({ user_id: userId }).lean();
+  return data?.orders || [];
 }
 
-export default async function Profile({ params }: any) {
-  const user = await GetUser(params.id);
-  const orders = await GetOrder(params.id)
+
+export default async function ProfilePage({ params }: { params: { id: string } }) {
+  const user = await getUser(params.id);
+  const orders = await getOrders(params.id);
+
+  if (!user) return <div className="text-center text-xl text-red-600">User not found</div>;
 
   return (
-    <div
-      className="text-sm text-[
-#C6C1B9] md:py-32   pt-24   min-h-screen "
-    ><h1 className="text-2xl lg:text-5xl font-NoirProRegular my-10 flex justify-center ">{user.name }</h1>
-      <Index user={user} orders={orders} />
+    <div className="text-[#C6C1B9] pt-24 md:py-32 min-h-screen px-6">
+      <h1 className="text-2xl lg:text-5xl font-semibold text-center mb-10">{user.name}</h1>
+      <ProfileIndex user={user} orders={orders} />
     </div>
   );
 }

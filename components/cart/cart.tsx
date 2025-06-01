@@ -5,7 +5,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import Item from "@/components/cart/item";
 import OrderDetails from "@/components/cart/orderDetails";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import ButtonX from "@/components/cart/buttonX";
+import ButtonX from "@/components/cart/buttonx";
 import { CartState, CartItem } from "@/types/cart";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchCartItems, getDataFromLocal } from "@/redux/cartSlice";

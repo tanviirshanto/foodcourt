@@ -79,8 +79,8 @@ export const POST = async (request: any) => {
         },
       ],
       mode: "payment",
-      success_url: `https://foodcourt-two.vercel.app/success`,
-      cancel_url: `https://foodcourt-two.vercel.app/view_order/${orderid}`,
+      success_url: `https://foodcourt-two.vercel.app/payment/success`,
+      cancel_url: `https://foodcourt-two.vercel.app/payment/cancel`,
       metadata: { userId, orderid },
     });
 

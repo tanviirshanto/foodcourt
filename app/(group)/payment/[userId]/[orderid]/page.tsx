@@ -64,7 +64,7 @@ async function handlePaymentWithSSLCommerz() {
     );
 
     const response = await axios.post(
-      "/api/payment/initiate",
+      "/api/payment/sslcommerz/initiate",
       {
         name: userInfo.name,
         email: userInfo.email,

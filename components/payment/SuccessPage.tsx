@@ -3,12 +3,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
-  const orderid = searchParams.get("orderid");
-  const userId = searchParams.get("userId");
+  // const searchParams = useSearchParams();
+  // const orderid = searchParams.get("orderid");
+  // const userId = searchParams.get("userId");
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-br">

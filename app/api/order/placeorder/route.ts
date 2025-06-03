@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Order from "@/models/orderModel";
 import { SingleOrder } from "@/types/order";
+import CartModel from "@/models/cartModel";
+import mongoose from "mongoose";
 
 
 
@@ -28,6 +30,7 @@ export async function POST(request: NextRequest) {
 
     userOrder.orders.push(orderData);
     await userOrder.save();
+    await CartModel.findOneAndDelete({ user_id: new mongoose.Types.ObjectId(user_id) });
 
     const createdOrder = userOrder.orders[userOrder.orders.length - 1];
     return NextResponse.json({ user_id, order: createdOrder }, { status: 201 });

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import Cart from "@/models/cartModel";
-import { Cart as CartType, CartItem } from "@/types"; // Assuming your types are in a `types` directory
+import { CartItem } from "@/types"; // Assuming your types are in a `types` directory
 
 
 export async function POST(request: NextRequest) {

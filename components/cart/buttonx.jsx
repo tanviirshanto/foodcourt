@@ -52,7 +52,7 @@ function ButtonX({
           const response = await axios.post("/api/order/placeorder", postData);
           console.log(response);
           toast.success("Order Placed Successfully")
-          router.push(`/payment/${user_id}/${response.data.order._id}`)
+          router.push(`/checkout/${user_id}/${response.data.order._id}`)
         }
       } catch (error) {
         console.log(error.message);

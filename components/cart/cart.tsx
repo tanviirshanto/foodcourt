@@ -24,8 +24,8 @@ const Cart: React.FC = () => {
   const [address, setAddress] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [contact, setContact] = useState<string>("");
-  const [shipping_charge] = useState<number>(100);
-  const [full_total, setFull_total] = useState<number>(0);
+  const shipping_charge = data?.items?.length ? 100 : 0;
+  const full_total = (data?.total_amount ?? 0) + shipping_charge;
 
   const cartRef = useRef<HTMLDivElement | null>(null);
 
@@ -44,11 +44,7 @@ const Cart: React.FC = () => {
     }
   }, [userId, dispatch]);
 
-  useEffect(() => {
-    if (data?.total_amount !== undefined) {
-      setFull_total(data.total_amount + shipping_charge);
-    }
-  }, [data, shipping_charge]);
+  
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -132,7 +128,7 @@ const Cart: React.FC = () => {
         </div>
         <div className="flex justify-between text-lg">
           <h1 className="font-bold text-xl">Shipping:</h1>
-          <h1>{data.items.length !== 0 ? "100" : "0"} Taka</h1>
+         <h1>{shipping_charge} Taka</h1>
         </div>
         <div className="flex justify-between text-lg mb-4">
           <h1 className="font-bold text-xl">Order Total:</h1>

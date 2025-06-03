@@ -27,7 +27,7 @@ function Navbar({isHomePage}) {
   
   const secondClass = scrollY > 0 && !isHomePage ? "top-0":"";
   
-  const newClass = "bg-slate-100 text-[#e60a2b] shadow-xl";
+  const newClass = "bg-slate-100 text-[#e60a2b] shadow";
   
   const mainClass = isHomePage?navbarClasses :`${newClass} ${secondClass}`
     

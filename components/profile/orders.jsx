@@ -88,7 +88,7 @@ function Orders({ orders, user }) {
                     <h1>{order.payment}</h1>
                     {order.payment === "pending" && (
                       <Link
-                        href={`/payment/${user._id}/${order._id}`}
+                        href={`/checkout/${user._id}/${order._id}`}
                         className="text-red-600 hover:text-red-900"
                       >
                         Pay now

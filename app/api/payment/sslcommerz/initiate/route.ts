@@ -23,10 +23,10 @@ export async function POST(req: NextRequest) {
     total_amount: body.amount,
     currency: "BDT",
     tran_id,
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/success`,
-    fail_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/fail`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/cancel`,
-    ipn_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/ipn`,
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/sslcommerz/payment/success`,
+    fail_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/fail`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/cancel`,
+    ipn_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/ipn`,
     cus_name: body.name,
     cus_email: body.email,
     cus_add1: body.address,
@@ -48,7 +48,9 @@ export async function POST(req: NextRequest) {
     product_name: "Food Order",
     product_category: "Food",
     product_profile: "profile",
-    product_amount: "3"
+    product_amount: "3",
+    user_id: body.user_id,
+    order_id: body.order_id,
   };
 
   const formData = new FormData();

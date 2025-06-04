@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     total_amount: body.amount,
     currency: "BDT",
     tran_id,
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/sslcommerz/payment/success`,
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/success`,
     fail_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/fail`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/cancel`,
     ipn_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/ipn`,

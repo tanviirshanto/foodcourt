@@ -3,6 +3,8 @@ import { connect } from "@/dbConfig/dbConfig";
 import Order from "@/models/orderModel";
 
 export async function POST(req: NextRequest) {
+  console.log("🔔 IPN HIT");
+
   await connect();
 
   const formData = await req.formData();
@@ -12,7 +14,7 @@ export async function POST(req: NextRequest) {
   const val_id = formData.get("val_id");
   const order_id = formData.get("order_id");
 
-  console.log("📩 IPN received:", { status, tran_id, order_id });
+  console.log("✅ IPN data:", { status, tran_id, val_id, order_id });
 
   if (status === "VALID" && order_id) {
     try {
@@ -22,12 +24,10 @@ export async function POST(req: NextRequest) {
         val_id,
       });
       console.log("✅ Order updated via IPN");
-    } catch (error) {
-      console.error("❌ IPN DB update failed:", error);
+    } catch (err) {
+      console.error("❌ IPN DB update failed:", err);
     }
-  } else {
-    console.warn("⚠️ Invalid IPN payload:", { status, order_id });
   }
 
-  return NextResponse.json({ message: "IPN received" });
+  return NextResponse.json({ message: "IPN processed" });
 }

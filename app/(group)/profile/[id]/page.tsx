@@ -1,21 +1,40 @@
-// app/profile/[id]/page.tsx
 import { connect } from "@/dbConfig/dbConfig";
 import User, { UserDocument } from "@/models/userModel";
 import Order from "@/models/orderModel";
 import ProfileIndex from "@/components/profile";
-
+import { SingleOrder } from "@/types/order";
 
 connect();
 
-async function getUser(id: string): Promise<UserDocument | null> {
-  return User.findById(id).lean();
+// Convert Mongoose ObjectId and Date to strings
+function serializeUser(user: any): any {
+  return {
+    ...user,
+    _id: user._id.toString(),
+  };
 }
 
-async function getOrders(userId: string) {
+function serializeOrders(data: any): SingleOrder[] {
+  return (data?.orders || []).map((order: any) => ({
+    ...order,
+    _id: order._id.toString(),
+    order_date: order.order_date?.toISOString(),
+    items: order.items.map((item: any) => ({
+      ...item,
+      _id: item._id.toString(),
+    })),
+  }));
+}
+
+async function getUser(id: string): Promise<any> {
+  const user = await User.findById(id).lean();
+  return user ? serializeUser(user) : null;
+}
+
+async function getOrders(userId: string): Promise<SingleOrder[]> {
   const data = await Order.findOne({ user_id: userId }).lean();
-  return data?.orders || [];
+  return serializeOrders(data);
 }
-
 
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const user = await getUser(params.id);

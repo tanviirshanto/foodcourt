@@ -12,6 +12,7 @@ const isLive = false; // true for production
 export async function POST(req: NextRequest) {
   await connect();
   const body = await req.json();
+  console.log("🔔",body);
 
   const tran_id = Math.floor(100000 + Math.random() * 900000).toString();
   const initUrl = 'https://sandbox.sslcommerz.com/gwprocess/v4/api.php';
@@ -50,8 +51,10 @@ export async function POST(req: NextRequest) {
     product_profile: "profile",
     product_amount: "3",
     user_id: body.user_id,
-    order_id: body.order_id,
+    value_a: body.order_id,
   };
+
+  console.log("SSLCommerz Initiation Data:", data);
 
   const formData = new FormData();
 

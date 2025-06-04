@@ -12,6 +12,7 @@ export interface OrderItem {
 
 export interface SingleOrder {
   tran_id:String,
+  val_id:String,
   order_date?: Date;
   name?: string;
   address: string;

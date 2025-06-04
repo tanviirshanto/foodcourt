@@ -20,6 +20,7 @@ const orderItemSchema = new Schema<OrderItem>({
 
 const singleOrderSchema = new Schema<SingleOrder>({
   tran_id: { type: String, unique: true },
+  val_id:{ type: String, unique: true },
   order_date: { type: Date, default: Date.now },
   name: String,
   address: { type: String, required: true },

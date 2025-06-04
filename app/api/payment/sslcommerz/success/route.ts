@@ -27,10 +27,6 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  return NextResponse.json({ message: "Payment handled successfully" });
-}
-
-export async function GET(req: NextRequest) {
-  // This is the browser redirect — send to frontend success page
+  // Redirect user to frontend success page
   return NextResponse.redirect(new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL));
 }

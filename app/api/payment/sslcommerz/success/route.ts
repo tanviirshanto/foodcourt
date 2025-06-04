@@ -5,14 +5,14 @@ import Order from "@/models/orderModel";
 export async function POST(req: NextRequest) {
   await connect();
 
-  const formData = await req.formData(); // ✅ Parse incoming form data
+  const formData = await req.formData();
 
   const status = formData.get("status");
   const tran_id = formData.get("tran_id");
   const val_id = formData.get("val_id");
   const order_id = formData.get("order_id");
 
-  console.log("✅ SSLCommerz Success POST:", { status, tran_id, order_id });
+  console.log("✅ Payment Success POST:", { status, tran_id, order_id });
 
   if (status === "VALID" && order_id) {
     try {
@@ -21,16 +21,16 @@ export async function POST(req: NextRequest) {
         transactionId: tran_id,
         val_id,
       });
-      console.log("✅ Order updated successfully");
+      console.log("✅ Order updated");
     } catch (error) {
-      console.error("❌ Error updating order:", error);
+      console.error("❌ DB update failed:", error);
     }
   }
 
-  return NextResponse.redirect(new URL("/payment/success", req.url));
+  return NextResponse.json({ message: "Payment handled successfully" });
 }
 
 export async function GET(req: NextRequest) {
-  // This handles user redirection from SSLCommerz
-  return NextResponse.redirect(new URL("/payment/success", req.url));
+  // This is the browser redirect — send to frontend success page
+  return NextResponse.redirect(new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL));
 }

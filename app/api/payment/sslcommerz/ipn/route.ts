@@ -6,31 +6,28 @@ export async function POST(req: NextRequest) {
   await connect();
 
   const formData = await req.formData();
-  const tran_id = formData.get("tran_id")?.toString();
-  const status = formData.get("status")?.toString(); // Should be 'VALID' or 'FAILED'
 
-  if (!tran_id) {
-    return NextResponse.json({ success: false, message: "Missing transaction ID" }, { status: 400 });
-  }
+  const status = formData.get("status");
+  const tran_id = formData.get("tran_id");
+  const val_id = formData.get("val_id");
+  const order_id = formData.get("order_id");
 
-  try {
-    const updated = await Order.updateOne(
-      { "orders.tran_id": tran_id },
-      {
-        $set: {
-          "orders.$.payment": status === "VALID" ? "paid" : "pending",
-          "orders.$.shipping": status === "VALID" ? "pending" : "cancelled",
-        },
-      }
-    );
+  console.log("📩 IPN received:", { status, tran_id, order_id });
 
-    if (updated.modifiedCount === 0) {
-      return NextResponse.json({ success: false, message: "Transaction not found" }, { status: 404 });
+  if (status === "VALID" && order_id) {
+    try {
+      await Order.findByIdAndUpdate(order_id, {
+        paymentStatus: "Paid",
+        transactionId: tran_id,
+        val_id,
+      });
+      console.log("✅ Order updated via IPN");
+    } catch (error) {
+      console.error("❌ IPN DB update failed:", error);
     }
-
-    return NextResponse.json({ success: true, message: "Order updated from IPN" });
-  } catch (err) {
-    console.error("IPN Update Error:", err);
-    return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
+  } else {
+    console.warn("⚠️ Invalid IPN payload:", { status, order_id });
   }
+
+  return NextResponse.json({ message: "IPN received" });
 }

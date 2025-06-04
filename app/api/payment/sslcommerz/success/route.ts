@@ -3,6 +3,14 @@ import { connect } from "@/dbConfig/dbConfig";
 import Order from "@/models/orderModel";
 import mongoose from "mongoose";
 
+export async function GET(req: NextRequest) {
+  console.log("✅ SSLCommerz success redirect via GET");
+
+  return NextResponse.redirect(
+    new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL!)
+  );
+}
+
 export async function POST(req: NextRequest) {
   await connect();
 
@@ -20,7 +28,6 @@ export async function POST(req: NextRequest) {
     mongoose.Types.ObjectId.isValid(order_sub_id as string)
   ) {
     try {
-      // Find the parent Order document that contains this sub-order
       const parentOrder = await Order.findOne({
         "orders._id": order_sub_id,
       });
@@ -39,7 +46,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Sub-order not found" }, { status: 404 });
       }
 
-      // Update the nested order fields
       parentOrder.orders[index].payment = "paid";
       parentOrder.orders[index].tran_id = tran_id as string;
       parentOrder.orders[index].val_id = val_id as string;

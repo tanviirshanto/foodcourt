@@ -5,17 +5,19 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { FaKey } from "react-icons/fa";
 import { signIn } from "next-auth/react";
-import Link from "next/link"; // ✅ Correct Link import
-import { AiOutlineLoading3Quarters } from "react-icons/ai"; // Optional spinner icon
+import Link from "next/link";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function LoginComponent() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
+  const [loginError, setLoginError] = useState(""); // 🔴 Error message state
 
   const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setLoginError(""); // Reset error
 
     const callback = await signIn("credentials", {
       ...data,
@@ -24,7 +26,8 @@ export default function LoginComponent() {
 
     if (callback?.error) {
       toast.error(callback.error);
-      setIsLoading(false); // ✅ Reset loading
+      setLoginError("Invalid email or password."); // Set error to display
+      setIsLoading(false);
     }
 
     if (callback?.ok && !callback?.error) {
@@ -39,9 +42,13 @@ export default function LoginComponent() {
         <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
           Login to your account
         </h2>
+        
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        {loginError && (
+          <p className="mt-2 text-center text-lg font-semibold text-red-600">{loginError}</p>
+        )}
         <form className="space-y-3" onSubmit={loginUser}>
           <label
             htmlFor="email"
@@ -74,12 +81,12 @@ export default function LoginComponent() {
             />
           </div>
 
-          <label
+          {/* <label
             htmlFor="password"
             className="block mb-2 text-lg font-medium text-gray-900 dark:text-white"
           >
             Password
-          </label>
+          </label> */}
           <div className="relative mb-6">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
               <FaKey className="text-gray-500 dark:text-gray-400" />
@@ -97,7 +104,7 @@ export default function LoginComponent() {
             />
           </div>
 
-          <div className="flex items-center justify-end">
+          {/* <div className="flex items-center justify-end">
             <div className="text-sm">
               <a
                 href="#"
@@ -106,7 +113,7 @@ export default function LoginComponent() {
                 Forgot password?
               </a>
             </div>
-          </div>
+          </div> */}
 
           <div>
             <button

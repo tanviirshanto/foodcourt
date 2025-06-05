@@ -16,12 +16,12 @@ function Logged_name({ scrollY, isHomePage }) {
   const id = session?.user?.id;
   const firstName = getFirstName(session?.user?.name);
   return (
-    <div className="flex py-1 pr-5 items-center ">
+    <div className="flex py-1 pr-5 items-center  text-xs lg:text-sm  ">
       {session ? (
-        <div className="flex ">
+        <div className="flex">
           <Link
             href={`/profile/${id}`}
-            className={`flex items-center font-semibold text-nowrap text-xs lg:text-sm px-2         `}
+            className={`flex items-center font-semibold text-nowrap  px-2         `}
           >
             Hi, {firstName}
           </Link>
@@ -34,7 +34,7 @@ function Logged_name({ scrollY, isHomePage }) {
           </div>
         </div>
       ) : (
-        <div className="flex gap-3 ">
+        <div className="flex gap-3 font-semibold ">
           <Link href={`/login`}>Login</Link>
           <Link href={`/register`}>Register</Link>
         </div>

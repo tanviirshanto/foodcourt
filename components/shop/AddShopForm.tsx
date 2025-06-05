@@ -48,7 +48,7 @@ export default function AddShopForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting form:", form);
+    // console.log("Submitting form:", form);
 
     const res = await fetch("/api/shop/addshop", {
       method: "POST",

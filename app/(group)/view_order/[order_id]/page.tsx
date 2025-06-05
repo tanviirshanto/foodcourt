@@ -25,10 +25,10 @@ function Page({ params }: any) {
 
   useEffect(() => {
     if (user_id) {
-      console.log(user_id, params.order_id);
+      // console.log(user_id, params.order_id);
       axios.get(`/api/order/getorder/${user_id}/${params.order_id}`)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setOrder(response.data); // Access the data property from the response object
         })
         .catch((error) => {

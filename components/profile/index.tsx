@@ -23,8 +23,9 @@ export default function ProfileIndex({ user, orders }: Props) {
         <ProfileMenu menu={menu} setMenu={setMenu} />
       </aside>
       <main className="w-full lg:w-4/5">
-        {menu === 1 && <Info user={user} />}
-        {menu === 2 && <Orders orders={sortedOrders} user={user} />}
+      {menu === 1 && <Orders orders={sortedOrders} user={user} />}
+        {menu === 2 && <Info user={user} />}
+        
       </main>
     </div>
   );

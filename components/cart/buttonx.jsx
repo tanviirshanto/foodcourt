@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import { useRouter } from "next/navigation";
-import React from 'react'
+import React, { useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast';
 import { GrLinkNext } from "react-icons/gr";
 
@@ -16,9 +16,10 @@ function ButtonX({
   shipping_charge,
   full_total,
   user_id,
-  
+  setOpen
 }) {
-  const router = useRouter()
+  const router = useRouter();
+  const [orderLoading,setOrderLoading]=useState(false);
 
       const orderData = {
         order_date:new Date(),
@@ -45,18 +46,25 @@ function ButtonX({
       else router.push("/register")
     } else {
       try {
+      
         if (!name || !address || !email || !contact) {
           toast.error("Please provide correct details");
         } else {
-          console.log(postData)
+          setOrderLoading(true);
+          // console.log(postData)
           const response = await axios.post("/api/order/placeorder", postData);
-          console.log(response);
-          toast.success("Order Placed Successfully")
-          router.push(`/checkout/${user_id}/${response.data.order._id}`)
+          // console.log(response);
+          // toast.success("Order Placed Successfully")
+          
+          router.push(`/checkout/${user_id}/${response.data.order._id}`);
+          setOpen(false);
         }
       } catch (error) {
         console.log(error.message);
         toast.error("Failed to place order")
+      }
+      finally {
+        setOrderLoading(false);
       }
     }
   }
@@ -67,12 +75,17 @@ function ButtonX({
       onClick={handleClick}
     >
       <div className="group-hover:-translate-x-2 group-hover:transition-transform  ">
-        {addDetails ? "Checkout" : "Add to Order"}
+        {addDetails ? "Checkout" : "Add Order Details"}
       </div>
       <span className="font-extrabold group-hover:translate-x-2 group-hover:transition-transform ">
         <GrLinkNext />
       </span>
-      <Toaster />
+      {/* <Toaster /> */}
+      {orderLoading && (
+        <div className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-50 flex justify-center items-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        </div>
+      )}
     </div>
   );
 }

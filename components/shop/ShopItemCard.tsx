@@ -27,7 +27,7 @@ const ShopItemCard: React.FC<ShopItemCardProps> = ({ item}) => {
 
         <div className="flex items-center justify-between">
           <p className="text-lg font-medium text-gray-700">
-           <span className="text-sm text-gray-500">BDT</span> {item.price} 
+           <span className="text-sm text-gray-500">BDT.</span> {item.price} 
           </p>
 
           <Order_now item={item} />

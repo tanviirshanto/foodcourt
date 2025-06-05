@@ -24,7 +24,7 @@ export default function RootLayout({
         <GlobalContextProvider>
           {children}
           <Footer />
-          <Next13NProgress color="red" height={5} />
+          <Next13NProgress color="red" height={4} />
         </GlobalContextProvider>
 
         {/* Optional: Vercel analytics */}

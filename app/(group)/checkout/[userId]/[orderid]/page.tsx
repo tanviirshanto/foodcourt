@@ -13,7 +13,8 @@ function CheckoutPage() {
 
   const [order, setOrder] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [stripeLoading, setStripeLoading] = useState(false);
+  const [sslLoading, setSslLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +37,7 @@ function CheckoutPage() {
 
   async function handlePaymentWithStripe() {
     try {
-      setLoading(true);
+      setStripeLoading(true);
       const response = await axios.post("/api/checkout", {
         products: order.items,
         userId,
@@ -51,7 +52,7 @@ function CheckoutPage() {
       console.error("Stripe error:", error);
       alert("Stripe payment initiation failed.");
     } finally {
-      setLoading(false);
+      setStripeLoading(false);
     }
   }
 
@@ -59,7 +60,7 @@ function CheckoutPage() {
     if (!userInfo) return;
 
     try {
-      setLoading(true);
+      setSslLoading(true);
       const full_total = order.items.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
@@ -87,20 +88,22 @@ function CheckoutPage() {
       console.error("SSLCommerz error:", error);
       alert("Failed to initiate payment.");
     } finally {
-      setLoading(false);
+      setSslLoading(false);
     }
   }
 
   if (!order || !userInfo) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-50 to-white">
-        <p className="text-gray-500 text-lg font-semibold animate-pulse">Loading order details...</p>
+        <p className="text-gray-500 text-lg font-semibold animate-pulse">
+          Loading order details...
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row max-w-7xl mx-auto p-8 gap-12 bg-gradient-to-br from-indigo-50 via-white to-gray-100 pt-[100px] ">
+    <div className="min-h-screen flex flex-col md:flex-row max-w-7xl mx-auto p-8 gap-12 bg-gradient-to-br from-indigo-50 via-white to-gray-100 pt-[100px]">
       {/* ORDER DETAILS */}
       <div className="md:w-1/2 bg-white rounded-2xl shadow-lg p-8 flex flex-col">
         <h2 className="text-3xl font-extrabold text-indigo-700 mb-8 text-center tracking-wide drop-shadow-sm">
@@ -127,11 +130,14 @@ function CheckoutPage() {
                 <p className="font-semibold text-lg text-gray-900">{item.name}</p>
                 <p className="text-sm text-indigo-500 tracking-wide">{item.category}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  Estimated Time: <span className="font-semibold">{item.estimated_time * item.quantity} mins</span>
+                  Estimated Time:{" "}
+                  <span className="font-semibold">
+                    {item.estimated_time * item.quantity} mins
+                  </span>
                 </p>
               </div>
               <div className="text-indigo-700 font-bold text-lg whitespace-nowrap">
-                ${item.price * item.quantity}
+                BDT. {item.price * item.quantity}
               </div>
             </li>
           ))}
@@ -140,11 +146,11 @@ function CheckoutPage() {
         <div className="mt-auto pt-6 border-t border-gray-300 text-gray-700">
           <div className="flex justify-between text-base font-medium mb-3">
             <span>Shipping Charge:</span>
-            <span>${order.shipping_charge}</span>
+            <span>BDT. {order.shipping_charge}</span>
           </div>
           <div className="flex justify-between text-xl font-extrabold text-indigo-800 mb-6">
             <span>Total Amount:</span>
-            <span>${order.full_total}</span>
+            <span>BDT. {order.full_total}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
@@ -166,15 +172,6 @@ function CheckoutPage() {
 
       {/* PAYMENT SECTION */}
       <div className="md:w-1/2 bg-white rounded-2xl shadow-lg p-10 flex flex-col justify-center items-center relative">
-        {loading && (
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 rounded-2xl">
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center flex flex-col items-center gap-4">
-              <Image src="/loading.gif" alt="Loading" width={60} height={60} />
-              <p className="text-lg font-semibold text-gray-800 animate-pulse">Redirecting...</p>
-            </div>
-          </div>
-        )}
-
         <motion.div
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -192,25 +189,26 @@ function CheckoutPage() {
             Complete Your Payment
           </h1>
           <p className="mb-8 text-gray-600 text-lg tracking-wide">
-            Order ID: <span className="font-semibold text-indigo-900">{orderid}</span>
+            Order ID:{" "}
+            <span className="font-semibold text-indigo-900">{orderid}</span>
           </p>
 
           <button
             onClick={handlePaymentWithStripe}
-            disabled={loading}
+            disabled={stripeLoading || sslLoading}
             className="w-full mb-5 flex items-center justify-center gap-5 bg-indigo-500 hover:bg-indigo-800 transition-colors duration-300 text-white font-semibold rounded-lg py-4 text-xl shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Image src="/stripe.png" width={42} height={42} alt="Stripe" />
-            Pay with Stripe
+            {stripeLoading ? "Redirecting..." : "Pay with Stripe"}
           </button>
 
           <button
             onClick={handlePaymentWithSSLCommerz}
-            disabled={loading}
+            disabled={stripeLoading || sslLoading}
             className="w-full flex items-center justify-center gap-5 bg-indigo-500 hover:bg-indigo-700 transition-colors duration-300 text-white font-semibold rounded-lg py-4 text-xl shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Image src="/sslcommerz.png" width={96} height={42} alt="SSLCommerz" />
-            Pay with SSLCommerz
+            {sslLoading ? "Redirecting..." : "Pay with SSLCommerz"}
           </button>
         </motion.div>
       </div>

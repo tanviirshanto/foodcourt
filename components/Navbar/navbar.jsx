@@ -23,7 +23,7 @@ function Navbar({isHomePage}) {
     const navbarClasses =
       scrollY > 0 && isHomePage
         ? "bg-slate-100 text-[#e60a2b] shadow-xl top-0"
-        : "gradient text-white ";
+        : "bg-gradient-to-r from-[#7bcfee] to-[#f6747d] text-white ";
   
   const secondClass = scrollY > 0 && !isHomePage ? "top-0":"";
   
@@ -32,10 +32,10 @@ function Navbar({isHomePage}) {
   const mainClass = isHomePage?navbarClasses :`${newClass} ${secondClass}`
     
   return (
-    <div>
+    <div className="z-50">
       <div
         className={`flex justify-end ${
-          isHomePage ? "gradient text-white" : "text-black"
+          isHomePage ? "bg-gradient-to-r from-[#7bcfee] to-[#f6747d] text-white" : "text-black"
         } `}
       >
         <Logged_name scrollY={scrollY} isHomePage={isHomePage} />

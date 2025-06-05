@@ -20,6 +20,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   setEmail,
   contact,
   setContact,
+  
 }) => {
   return (
     <div className="text-white flex flex-col gap-4">
@@ -28,13 +29,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         value={name}
         placeholder="Name"
         onChange={(e) => setName(e.target.value)}
-        className="p-2 rounded-md bg-transparent border border-white"
+        className="p-2 rounded-md bg-transparent border border-white placeholder:text-slate-200"
       />
       <textarea
         value={address}
         placeholder="Address"
         onChange={(e) => setAddress(e.target.value)}
-        className="p-2 rounded-md bg-transparent border border-white"
+        className="p-2 rounded-md bg-transparent border border-white placeholder:text-slate-200"
         rows={3}
       />
       <input
@@ -42,14 +43,14 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         value={email}
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
-        className="p-2 rounded-md bg-transparent border border-white"
+        className="p-2 rounded-md bg-transparent border border-white placeholder:text-slate-200"
       />
       <input
         type="text"
         value={contact}
         placeholder="Contact Number"
         onChange={(e) => setContact(e.target.value)}
-        className="p-2 rounded-md bg-transparent border border-white"
+        className="p-2 rounded-md bg-transparent border border-white placeholder:text-slate-200"
       />
     </div>
   );

@@ -3,24 +3,17 @@ import { connect } from "@/dbConfig/dbConfig";
 import Order from "@/models/orderModel";
 import mongoose from "mongoose";
 
-export async function GET(req: NextRequest) {
-  console.log("✅ SSLCommerz success redirect via GET");
-
-  return NextResponse.redirect(
-    new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL!)
-  );
-}
-
 export async function POST(req: NextRequest) {
   await connect();
 
   const formData = await req.formData();
+
   const status = formData.get("status");
   const tran_id = formData.get("tran_id");
   const val_id = formData.get("val_id");
-  const order_sub_id = formData.get("value_a"); // This is the _id of the inner order
+  const order_sub_id = formData.get("value_a");
 
-  console.log("✅ Payment Success POST:", { status, tran_id, order_sub_id });
+  console.log("✅ SSLCommerz DEMO POST Received:", { status, tran_id, order_sub_id });
 
   if (
     status === "VALID" &&
@@ -33,7 +26,6 @@ export async function POST(req: NextRequest) {
       });
 
       if (!parentOrder) {
-        console.error("❌ Order not found for sub ID");
         return NextResponse.json({ error: "Order not found" }, { status: 404 });
       }
 
@@ -42,7 +34,6 @@ export async function POST(req: NextRequest) {
       );
 
       if (index === -1) {
-        console.error("❌ Sub-order not found");
         return NextResponse.json({ error: "Sub-order not found" }, { status: 404 });
       }
 
@@ -51,18 +42,21 @@ export async function POST(req: NextRequest) {
       parentOrder.orders[index].val_id = val_id as string;
 
       await parentOrder.save();
-
-      console.log("✅ Sub-order payment updated");
+      console.log("✅ Sub-order marked as paid");
     } catch (err) {
-      console.error("❌ Error updating sub-order", err);
+      console.error("❌ Payment processing error", err);
       return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
   } else {
-    console.warn("❌ Invalid status or order_sub_id");
+    console.warn("❌ Invalid POST data from SSLCommerz");
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  return NextResponse.redirect(
-    new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL!)
-  );
+  // Final redirect for the browser
+  return NextResponse.redirect(new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL!));
+}
+
+// Optional GET handler (if someone hits this route manually)
+export async function GET() {
+  return NextResponse.redirect(new URL("/payment/success", process.env.NEXT_PUBLIC_BASE_URL!));
 }

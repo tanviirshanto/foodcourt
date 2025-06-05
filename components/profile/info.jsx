@@ -30,7 +30,7 @@ function Info({ user }) {
       formData.append("address", address);
       const response = await axios.put(`/api/user/update/`, formData);
     } catch (error) {
-      console.log("Error", error.message);
+      // console.log("Error", error.message);
     } finally {
       setLoading(false);
     }

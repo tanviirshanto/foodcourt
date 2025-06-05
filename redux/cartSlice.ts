@@ -25,7 +25,7 @@ const initialState: CartState = {
 };
 
 const computeCartTotals = (items: CartItem[]) => {
-  console.log("Computing cart totals for items:", items);
+  // console.log("Computing cart totals for items:", items);
   const total_amount = items.reduce((sum, item) => sum + item.quantity * item.price, 0);
   const total_time = items.reduce((sum, item) => sum + item.quantity * item.estimated_time, 0);
   const total_item = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -48,7 +48,7 @@ export const fetchCartItems = createAsyncThunk<CartState["data"], { user_id: str
 export const createCartItem = createAsyncThunk<CartState["data"], CartPostPayload>(
   "cartItems/createCartItem",
   async (postData) => {
-    console.log("Creating cart item with payload:", postData);
+    // console.log("Creating cart item with payload:", postData);
     return await addToCart(postData);
   }
 );
@@ -175,7 +175,7 @@ const cartSlice = createSlice({
       })
 
       .addCase(createCartItem.fulfilled, (state, action) => {
-        console.log("createCartItem fulfilled payload:", action.payload);
+        // console.log("createCartItem fulfilled payload:", action.payload);
         state.isLoading = false;
         if (action.payload) {
           state.data = action.payload;
@@ -195,7 +195,7 @@ const cartSlice = createSlice({
       })
 
       .addCase(editCartItem.fulfilled, (state, action) => {
-        console.log("editCartItem fulfilled payload:", action.payload);
+        // console.log("editCartItem fulfilled payload:", action.payload);
         state.isLoading = false;
         state.data = action.payload;
         const totals = computeCartTotals(state.data.items);
@@ -211,7 +211,7 @@ const cartSlice = createSlice({
       })
 
       .addCase(removeCartItem.fulfilled, (state, action) => {
-        console.log("removeCartItem fulfilled payload:", action.payload);
+        // console.log("removeCartItem fulfilled payload:", action.payload);
         state.isLoading = false;
         state.data = action.payload;
         const totals = computeCartTotals(state.data.items);

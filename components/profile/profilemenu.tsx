@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function ProfileMenu({ menu, setMenu }: Props) {
-  const menus = ["Info", "Orders", "Change Password", "Logout"];
+  const menus = [ "Orders","Info"];
 
   return (
     <nav className="flex flex-row lg:flex-col gap-5 lg:divide-y divide-x lg:divide-x-0 text-lg lg:text-2xl px-5">

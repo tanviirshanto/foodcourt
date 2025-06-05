@@ -82,7 +82,7 @@ function Restaurants({ shops }) {
           </button>
         )}
 
-        <div className="flex w-full justify-center max-w-screen-xl overflow-hidden">
+        <div className="flex w-full justify-center max-w-screen-xl  mb-2">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={slideIndex}

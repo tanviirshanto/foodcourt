@@ -17,6 +17,11 @@ const DynamicNavbarComponent = dynamic(
   { ssr: false }
 );
 
+const DynamicHeroComponent = dynamic(
+  () => import("@/components/Home/hero"),
+  { ssr: false }
+);
+
 export default async function Home() {
   await connect();
 
@@ -36,7 +41,7 @@ export default async function Home() {
   return (
     <div>
       <DynamicNavbarComponent isHomePage={true} />
-      <Hero />
+      <DynamicHeroComponent />
       <Recom
         items={recommendedItems.map((item) => ({
           ...item,

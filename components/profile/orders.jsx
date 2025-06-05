@@ -44,7 +44,7 @@ function Orders({ orders, user }) {
       <hr />
       <div className="overflow-x-auto">
         <div className="">
-          <table className="w-full text-sm lg:text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm lg:text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="pr-6 pl-3 py-3">
@@ -83,7 +83,7 @@ function Orders({ orders, user }) {
                   <td className="px-6 py-4">
                     <Link href={`/view_order/${order._id}`} className="text-green-500">View</Link>
                   </td>
-                  <td className="px-6 py-4">BDT {order.full_total}</td>
+                  <td className="px-6 py-4">BDT. {order.full_total}</td>
                   <td className="px-6 py-4 flex justify-between gap-2">
                     <h1>{order.payment}</h1>
                     {order.payment === "pending" && (

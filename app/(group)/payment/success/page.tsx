@@ -1,12 +1,8 @@
 // app/payment/success/page.tsx
-import { Suspense } from "react";
-import SuccessPage from "@/components/payment/SuccessPage";
-
 export default function Page() {
   return (
-    
-    <div>
-      Payment Successfull
-    </div>    
+    <div className="text-green-600 text-center mt-10">
+      ✅ Your payment was successful. Thank you!
+    </div>
   );
 }

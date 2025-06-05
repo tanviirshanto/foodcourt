@@ -12,10 +12,10 @@ const isLive = false; // true for production
 export async function POST(req: NextRequest) {
   await connect();
   const body = await req.json();
-  console.log("🔔",body);
+  console.log("🔔", body);
 
   const tran_id = Math.floor(100000 + Math.random() * 900000).toString();
-  const initUrl = 'https://sandbox.sslcommerz.com/gwprocess/v4/api.php';
+  const initUrl = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
 
   // Prepare SSLCommerz payload
   const data = {
@@ -25,8 +25,8 @@ export async function POST(req: NextRequest) {
     currency: "BDT",
     tran_id,
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/success`,
-    fail_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/fail`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/cancel`,
+    fail_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/sslcommerz/fail`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/sslcommerz/cancel`,
     ipn_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/sslcommerz/ipn`,
     cus_name: body.name,
     cus_email: body.email,
@@ -65,13 +65,11 @@ export async function POST(req: NextRequest) {
 
   console.log("SSLCommerz Initiation Data:", formData);
 
-  const reqOptions = {method: "POST", body: formData};
+  const reqOptions = { method: "POST", body: formData };
 
-  let SSLRes= await fetch(initUrl, reqOptions);
+  let SSLRes = await fetch(initUrl, reqOptions);
 
   let SSLResJSON = await SSLRes.json();
 
   return NextResponse.json({ data: SSLResJSON });
-
-
 }

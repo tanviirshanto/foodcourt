@@ -14,7 +14,7 @@ const Add_to_order: React.FC<AddToOrderProps> = ({ newItem, setShowModal }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(newItem);
+    // console.log(newItem);
   }, [newItem]);
 
   const addItem = async (e: React.MouseEvent<HTMLButtonElement>) => {

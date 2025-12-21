@@ -1,12 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { ICart as ICartBase, CartItem } from "@/types/cart"; // adjust path if needed
+import { ICart as ICartBase, CartItem } from "@/types/cart"; 
 
-// Extend ICart from cart.ts to add mongoose-specific properties
 interface ICart extends Omit<ICartBase, "_id" | "user_id">, Document {
   user_id: mongoose.Types.ObjectId;
 }
 
-// Define the schema using the imported CartItem type
 const cartSchema: Schema<ICart> = new mongoose.Schema(
   {
     user_id: {
@@ -41,7 +39,7 @@ const cartSchema: Schema<ICart> = new mongoose.Schema(
   }
 );
 
-// Pre-save hook to calculate totals
+// Pre-saving hook to calculate totals
 cartSchema.pre<ICart>("save", function (next) {
   this.total_amount = parseFloat(
     this.items.reduce((total, item) => total + item.quantity * item.price, 0).toFixed(2)
@@ -55,7 +53,7 @@ cartSchema.pre<ICart>("save", function (next) {
   next();
 });
 
-// Create the model
+// Creating the model
 const Cart: Model<ICart> = mongoose.models.carts || mongoose.model<ICart>("carts", cartSchema);
 
 export default Cart;

@@ -7,7 +7,6 @@ export const store = configureStore({
   },
 });
 
-// 👇 These are important for typed dispatch and selector
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

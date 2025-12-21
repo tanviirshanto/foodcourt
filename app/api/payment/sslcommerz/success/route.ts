@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   const val_id = formData.get("val_id");
   const order_sub_id = formData.get("value_a");
 
-  console.log("✅ SSLCommerz DEMO POST Received:", { status, tran_id, order_sub_id });
+  console.log("SSLCommerz DEMO POST Received:", { status, tran_id, order_sub_id });
 
   if (
     status === "VALID" &&
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       parentOrder.orders[index].val_id = val_id as string;
 
       await parentOrder.save();
-      console.log("✅ Sub-order marked as paid");
+      console.log("Sub-order marked as paid");
     } catch (err) {
       console.error("❌ Payment processing error", err);
       return NextResponse.json({ error: "Internal server error" }, { status: 500 });

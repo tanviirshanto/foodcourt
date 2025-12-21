@@ -1,5 +1,6 @@
 import mongoose, { Schema, model, models, type Model } from "mongoose";
 import type { ReviewDocument } from "@/types/review";
+import User from "@/models/userModel"; 
 
 const reviewSchema = new Schema<ReviewDocument>(
   {

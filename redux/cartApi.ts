@@ -4,7 +4,7 @@ import { CartPostPayload } from "../types";
 export const getCartItems = async ({ user_id }: { user_id: string }) => {
   const response = await axios.get(`/api/cart/getcart/${user_id}`);
   if (response.data.success) {
-    return response.data.data; // unwrap cart object
+    return response.data.data; // unwraping cart object
   }
   throw new Error(response.data.message || "Failed to fetch cart");
 };
@@ -13,12 +13,12 @@ export const addToCart = async (postData: CartPostPayload) => {
   try {
     const res = await axios.post("/api/cart/additemtocart", postData);
 
-    // ✅ Make sure to return the data
+    // Making sure to return the data
     return res.data;
   } catch (error: any) {
     console.error("addToCart error:", error.response?.data || error.message);
 
-    // ✅ Throw meaningful error for rejection
+    // Throwing meaningful error for rejection
     throw new Error(error.response?.data?.error || "Failed to add to cart");
   }
 };
@@ -46,7 +46,7 @@ export const deleteCartItem = async (postData: any) => {
 export const removeCart = async (user_id: string) => {
   const response = await axios.delete(`/api/cart/deletecart?userid=${user_id}`);
   if (response.data.success) {
-    return response.data.data || {}; // could be empty object if nothing returned
+    return response.data.data || {}; // empty object if nothing returned
   }
   throw new Error(response.data.message || "Failed to delete cart");
 };

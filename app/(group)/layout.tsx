@@ -1,9 +1,14 @@
-import Navbar from "@/components/Navbar/navbar";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function GroupLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <section><Navbar isHomePage={false} />{children}</section>;
+  return (
+    <section>
+      <Navbar />
+      {children}
+    </section>
+  );
 }

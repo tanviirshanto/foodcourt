@@ -40,7 +40,6 @@ export const POST = async (request: any) => {
         break;
       case "checkout.session.async_payment_failed":
       case "checkout.session.async_payment_succeeded":
-        // Handle async payment events if needed
         break;
       default:
         console.log(`Unhandled event type: ${eventType}`);

@@ -9,6 +9,7 @@ export interface ItemType {
   description: string;
   images: string[];
   estimated_time: number;
+  shop_name?: string;
 }
 
 export interface ShopType {

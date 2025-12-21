@@ -1,4 +1,4 @@
-export interface Recommended {
+export interface ShopItem {
     _id: string;
     shop_name: string;
     name: string;

@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { GlobalContextProvider } from "@/redux/Provider";
-import Footer from "@/components/Footer/footer";
-import { Next13NProgress } from "nextjs13-progress";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Providers from "./providers";
+import AppLayout from "@/components/layout/AppLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,14 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} font-NoirProRegular`}>
-        <GlobalContextProvider>
-          {children}
-          <Footer />
-          <Next13NProgress color="red" height={4} />
-        </GlobalContextProvider>
-
-        {/* Optional: Vercel analytics */}
-        <SpeedInsights />
+        <Providers>
+          <AppLayout>{children}</AppLayout>
+        </Providers>
       </body>
     </html>
   );

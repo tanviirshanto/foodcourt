@@ -4,7 +4,7 @@ export async function connect() {
   try {
     if (mongoose.connection.readyState >= 1) return;
 
-    await mongoose.connect(process.env.MONGO_URI!); // ✅ Await here
+    await mongoose.connect(process.env.MONGO_URI!); 
 
     const connection = mongoose.connection;
 

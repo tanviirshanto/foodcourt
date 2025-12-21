@@ -1,40 +1,26 @@
-import Image from "next/image";
-import Link from "next/link";
-import Order_now from "../order/order_now";
-import type { Recommended } from "@/types/recommended";
+"use client";
 
-interface ShopItemCardProps {
-  item: Recommended;
-  role?: string;
-  shopId?: string;
-}
+import type { ShopItem } from "@/types/recommended";
 
-const ShopItemCard: React.FC<ShopItemCardProps> = ({ item}) => {
+import ShopItemImage from "./ShopItemImage";
+import AddToCartNow from "../AddToCart/AddToCartNow";
+
+export default function ShopItemCard({ item }: { item: ShopItem }) {
   return (
-    <div className="w-80 md:w-96 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 overflow-hidden">
-      <div className="relative group h-64">
-        <Image
-          src={item.images[0]}
-          height={720}
-          width={1080}
-          alt={item.name}
-          className="w-full h-full object-cover rounded-t-3xl transition-transform duration-300 group-hover:scale-105 group-hover:brightness-75"
-        />
-      </div>
+    <div className="relative w-72 sm:w-80 md:w-96 rounded-[2rem] shadow-2xl overflow-hidden group hover:scale-105 hover:-translate-y-2 transition-transform duration-500">
+      <ShopItemImage item={item} />
 
-      <div className="px-6 py-5 space-y-3">
-        <h2 className="text-xl font-semibold text-gray-900 line-clamp-2">{item.name}</h2>
+      <div className="px-5 py-6 flex flex-col items-center text-center">
+        <h3 className="text-gray-900 font-bold text-lg md:text-xl line-clamp-2 mb-4">
+          {item.name}
+        </h3>
 
-        <div className="flex items-center justify-between">
-          <p className="text-lg font-medium text-gray-700">
-           <span className="text-sm text-gray-500">BDT.</span> {item.price} 
-          </p>
-
-          <Order_now item={item} />
+        <div className="relative flex justify-center w-full">
+          <div className="relative z-10">
+            <AddToCartNow item={item} />
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default ShopItemCard;
+}

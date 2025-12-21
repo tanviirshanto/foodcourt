@@ -1,13 +1,11 @@
 import mongoose, { Document, Schema, Model, models } from "mongoose";
 import { OrderItem, SingleOrder } from "@/types/order";
 
-// Create a TS interface extending Document
 export interface OrderDocument extends Document {
   user_id: mongoose.Types.ObjectId;
   orders: SingleOrder[];
 }
 
-// Define schemas
 const orderItemSchema = new Schema<OrderItem>({
   id: String,
   name: String,
@@ -48,6 +46,5 @@ const orderSchema = new Schema<OrderDocument>(
   { timestamps: true }
 );
 
-// Export typed model
 const Order: Model<OrderDocument> = models.orders || mongoose.model<OrderDocument>("orders", orderSchema);
 export default Order;

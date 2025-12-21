@@ -7,7 +7,7 @@ import AddToCartNow from "../AddToCart/AddToCartNow";
 
 export default function ShopItemCard({ item }: { item: ShopItem }) {
   return (
-    <div className="relative w-72 sm:w-80 md:w-96 rounded-[2rem] shadow-2xl overflow-hidden group hover:scale-105 hover:-translate-y-2 transition-transform duration-500">
+    <div className="relative w-72 sm:w-72 md:w-80 rounded-[2rem] shadow-2xl overflow-hidden group hover:scale-105 hover:-translate-y-2 transition-transform duration-500">
       <ShopItemImage item={item} />
 
       <div className="px-5 py-6 flex flex-col items-center text-center">

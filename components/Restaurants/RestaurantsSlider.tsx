@@ -38,7 +38,7 @@ export default function RestaurantsSlider({ shops }: { shops: any[] }) {
         </button>
       )}
 
-      <div className="flex w-full justify-center max-w-screen-xl">
+      <div className="flex w-full justify-center gap-5 max-w-screen-xl">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={slideIndex}
@@ -54,7 +54,7 @@ export default function RestaurantsSlider({ shops }: { shops: any[] }) {
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
-            className="flex"
+            className="flex gap-5" // Ensure gap is applied here
           >
             {shops.slice(slideIndex, slideIndex + sliceValue).map((shop) => (
               <RestaurantCard key={shop._id} shop={shop} />

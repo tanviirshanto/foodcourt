@@ -53,6 +53,12 @@ Food Court is a modern online food ordering platform where users can browse a va
    http://localhost:3000
    ```
 
+## Live Demo
+
+You can check the live version of the app at:
+[FoodCourt - Live Demo](https://foodcourt-two.vercel.app/)
+
+
 ## Screenshots
 
 | Mobile View                                                            | Desktop View                                                             |
@@ -67,14 +73,10 @@ Food Court is a modern online food ordering platform where users can browse a va
 | ![Profile - Mobile View](./screenshots/profile-mobile.png)             | ![Profile - Desktop View](./screenshots/profile-desktop.png)             |
 | ![Register - Mobile View](./screenshots/register-mobile.png)           | ![Register - Desktop View](./screenshots/register-desktop.png)           |
 | ![Login - Mobile View](./screenshots/login-mobile.png)                 | ![Login - Desktop View](./screenshots/login-desktop.png)                 |
-| ![Stripe Payment - Mobile View](./screenshots/stripe-mobile.png)       | ![SSLCommerz Payment - Desktop View](./screenshots/sslcommerz.png)       |
+| ![Stripe Payment - Mobile View](./screenshots/stripe.png)       | ![SSLCommerz Payment - Desktop View](./screenshots/sslcommerz.png)       |
 | ![View Order - Mobile View](./screenshots/view_order-mobile.png)       | ![View Order - Desktop View](./screenshots/view_order-desktop.png)       |
 
 
-## Live Demo
-
-You can check the live version of the app at:
-[FoodCourt - Live Demo](https://foodcourt-two.vercel.app/)
 
 ## Contributing
 

@@ -55,14 +55,21 @@ Food Court is a modern online food ordering platform where users can browse a va
 
 ## Screenshots
 
-| Mobile View                                                                      | Desktop View                                                                   |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| ![Home - Mobile View](./screenshots/foodcourt-home-mobile.png)                   | ![Home - Desktop View](./screenshots/foodcourt-home-desktop.png)               |
-| ![Top Picks - Mobile View](./screenshots/foodcourt-top-picks-mobile.png)         | ![Top Picks - Desktop View](./screenshots/foodcourt-top-picks-desktop.png)     |
-| ![Restaurants - Mobile View](./screenshots/foodcourt-restaurants-mobile.png)     | ![Restaurants - Desktop View](./screenshots/foodcourt-restaurants-desktop.png) |
-| ![Reviews - Mobile View](./screenshots/foodcourt-reviews-mobile.png)             | ![Footer - Desktop View](./screenshots/foodcourt-footer-desktop.png)           |
-| ![All Items - Mobile View](./screenshots/foodcourt-items-mobile.png)             | ![Cart - Mobile View](./screenshots/foodcourt-cart-mobile.png)                 |
-| ![Order Details - Mobile View](./screenshots/foodcourt-order-details-mobile.png) | ![Payment - Desktop View](./screenshots/foodcourt-payment-desktop.png)         |
+| Mobile View                                                            | Desktop View                                                             |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| ![Home - Mobile View](./screenshots/home-mobile.png)                   | ![Home - Desktop View](./screenshots/home-desktop.png)                   |
+| ![Top Picks - Mobile View](./screenshots/top_picks-mobile.png)         | ![Top Picks - Desktop View](./screenshots/top_picks-desktop.png)         |
+| ![Restaurants - Mobile View](./screenshots/restaurants-mobile.png)     | ![Restaurants - Desktop View](./screenshots/restaurants-desktop.png)     |
+| ![Reviews - Mobile View](./screenshots/reviews-mobile.png)             | ![Reviews - Desktop View](./screenshots/reviews-desktop.png)             |
+| ![Cart - Mobile View](./screenshots/cart-mobile.png)                   | ![Cart - Desktop View](./screenshots/cart-desktop.png)                   |
+| ![Order Details - Mobile View](./screenshots/order_details-mobile.png) | ![Order Details - Desktop View](./screenshots/order_details-desktop.png) |
+| ![Payment - Mobile View](./screenshots/payment-mobile.png)             | ![Payment - Desktop View](./screenshots/payment-desktop.png)             |
+| ![Profile - Mobile View](./screenshots/profile-mobile.png)             | ![Profile - Desktop View](./screenshots/profile-desktop.png)             |
+| ![Register - Mobile View](./screenshots/register-mobile.png)           | ![Register - Desktop View](./screenshots/register-desktop.png)           |
+| ![Login - Mobile View](./screenshots/login-mobile.png)                 | ![Login - Desktop View](./screenshots/login-desktop.png)                 |
+| ![Stripe Payment - Mobile View](./screenshots/stripe-mobile.png)       | ![SSLCommerz Payment - Desktop View](./screenshots/sslcommerz.png)       |
+| ![View Order - Mobile View](./screenshots/view_order-mobile.png)       | ![View Order - Desktop View](./screenshots/view_order-desktop.png)       |
+
 
 ## Live Demo
 
